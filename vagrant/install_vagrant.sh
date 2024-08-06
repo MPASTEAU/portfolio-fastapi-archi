@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Update and install dependencies
+# Install VirtualBox
 sudo apt-get update
-sudo apt-get install -y curl gnupg apt-transport-https virtualbox
+sudo apt-get install virtualbox -y
 
 # Install Vagrant
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get update
-sudo apt-get install -y vagrant
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg -y
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install vagrant -y
